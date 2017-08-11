@@ -1,0 +1,47 @@
+version: '3'
+
+services:
+  db:
+    image: heucles/docker-postgres-logging
+    
+    environment:
+      POSTGRES_PASSWORD: senha123
+      POSTGRES_USER: postuser
+      POSTGRES_DB: postuser
+    volumes:
+      - ./development_env_toolset/docker_volumes/db:/var/lib/postgresql/data
+      - ./name-contests/database:/dbScripts
+    ports:
+      - '5432:5432'
+  #  command: ./dbScripts/config.sh
+  # back_end:
+  #   user: node
+  #   image: csclaickoliveira/node_oracledb_pm2
+  #   command: >-
+  #     bash -c './wait-for-it.sh db:5432;\
+  #       ./wait-for-it.sh redis:6379;\
+  #       ./wait-for-it.sh rabbit:5672;\
+  #       cd app;\
+  #       npm install;\
+  #       node server.js'
+  #   volumes:
+  #     - ./host:/app
+  #   ports:
+  #     - '3000:3000'
+  #   depends_on:
+  #     - db
+  #     - redis
+  #     - rabbit
+  #   links:
+  #     - db
+  #     - redis
+  #     - rabbit
+  #   environment:
+  #     - XPTO=XPTO
+  mongo:
+    image: mongo:latest
+    ports:
+      - '27017:27017'
+    volumes:
+      - ./development_env_toolset/docker_volumes/mongo:/data/db
+      - ./name-contests/database:/dbScripts      
